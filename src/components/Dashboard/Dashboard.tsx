@@ -1,6 +1,4 @@
-import { Box } from '@mui/material';
 import { FC } from 'react';
-import CurrencyPage from '../Currency/CurrencyPage';
 import UserInfo from '../UserInfo/UserInfo';
 
 const DUMMY_INFO = {
@@ -10,17 +8,12 @@ const DUMMY_INFO = {
   userName: 'Natka',
 };
 
-const HomePage: FC = () => {
-  return (
-    <Box>
-      <CurrencyPage />
-      <UserInfo
-        totalBalance={DUMMY_INFO.totalBalance}
-        userPhotoUrl={DUMMY_INFO.userPhotoUrl}
-        userName={DUMMY_INFO.userName}
-      />
-    </Box>
-  );
-};
+const Dashboard: FC = () => (
+  <UserInfo
+    totalBalance={DUMMY_INFO.totalBalance}
+    userPhotoUrl={DUMMY_INFO.userPhotoUrl}
+    userName={DUMMY_INFO.userName}
+  />
+);
 
-export default HomePage;
+export default Dashboard;
