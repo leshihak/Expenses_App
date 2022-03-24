@@ -12,7 +12,6 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
-  Typography,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
