@@ -53,7 +53,7 @@ const Currency: FC = () => {
           const USDtoEUR =
             currency.currencyCodeA === USD_CURRENCY_CODE &&
             currency.currencyCodeB === EUR_CURRENCY_CODE;
-          console.log(CurrencyCode.number(currency.currencyCodeA.toString()));
+
           return (
             showMainCurrencies && (
               <Box

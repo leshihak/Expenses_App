@@ -1,9 +1,11 @@
-import { FC } from 'react';
+import { Box } from '@mui/material';
+import { FC, useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import useMonobankToken from '../../hooks/useMonobankAuth';
+import { AccountInfo } from '../../models/bank.model';
 import { getBankData } from '../../services/bank.service';
+import Card from '../Card/Card';
 import Drawer from '../ui/Drawer/Drawer';
-import Loader from '../ui/Loader/Loader';
 import UserInfo from '../UserInfo/UserInfo';
 
 const DUMMY_INFO = {
@@ -14,18 +16,18 @@ const Dashboard: FC = () => {
   const { user } = useAuth();
   const token = useMonobankToken();
 
-  if (!token) {
-    return <Loader />;
-  }
+  const [clientAccounts, setClientAccounts] = useState<AccountInfo[]>([]);
 
-  const handleClick = () => {
-    getBankData(token)
-      .then((result) => {
-        const { data } = result;
-        console.log(data);
-      })
-      .catch((error) => console.log(error));
-  };
+  useEffect(() => {
+    if (token) {
+      getBankData(token)
+        .then((result) => {
+          const { data } = result;
+          setClientAccounts(data.accounts);
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [token]);
 
   return (
     <Drawer>
@@ -34,9 +36,11 @@ const Dashboard: FC = () => {
         userPhotoUrl={user?.photoURL}
         userName={user?.displayName}
       />
-      <button onClick={handleClick} style={{ backgroundColor: 'green' }}>
-        CLICK
-      </button>
+      <Box display="flex" justifyContent="space-between" flexWrap="wrap">
+        {clientAccounts?.map((account) => (
+          <Card data={account} key={account.id} />
+        ))}
+      </Box>
     </Drawer>
   );
 };
