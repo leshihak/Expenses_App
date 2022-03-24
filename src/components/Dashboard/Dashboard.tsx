@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useAuth } from '../../hooks/useAuth';
 import Drawer from '../ui/Drawer/Drawer';
 import UserInfo from '../UserInfo/UserInfo';
 
@@ -9,14 +10,18 @@ const DUMMY_INFO = {
   userName: 'Natka',
 };
 
-const Dashboard: FC = () => (
-  <Drawer>
-    <UserInfo
-      totalBalance={DUMMY_INFO.totalBalance}
-      userPhotoUrl={DUMMY_INFO.userPhotoUrl}
-      userName={DUMMY_INFO.userName}
-    />
-  </Drawer>
-);
+const Dashboard: FC = () => {
+  const { user } = useAuth();
+
+  return (
+    <Drawer>
+      <UserInfo
+        totalBalance={DUMMY_INFO.totalBalance}
+        userPhotoUrl={user?.photoURL}
+        userName={user?.displayName}
+      />
+    </Drawer>
+  );
+};
 
 export default Dashboard;

@@ -1,18 +1,25 @@
 import {
+  AppBar,
   Box,
   Button,
   CssBaseline,
   Divider,
   Drawer as DrawerComponent,
+  IconButton,
   Link,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
+  Toolbar,
+  Typography,
 } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import { ReactNode, useState } from 'react';
+import { getAuth, signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 const drawerList = [
@@ -26,15 +33,20 @@ interface DrawerProps {
 }
 
 const Drawer = (props: DrawerProps) => {
+  const auth = getAuth();
+  const navigate = useNavigate();
   const { window, children } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  const handleLogOut = () =>
+    signOut(auth)
+      .then(() => navigate('/auth'))
+      .catch((error) => console.log(error));
 
   const drawer = (
     <Box>
+      <Toolbar />
+      <Divider />
       <List sx={{ pt: 2 }}>
         {drawerList.map((item) => (
           <ListItem button key={item.title} component={Link} href={item.href}>
@@ -45,7 +57,9 @@ const Drawer = (props: DrawerProps) => {
       </List>
       <Divider />
       <Box p={2} display="flex" justifyContent="center">
-        <Button fullWidth>LOG OUT</Button>
+        <Button fullWidth onClick={handleLogOut}>
+          LOG OUT
+        </Button>
       </Box>
     </Box>
   );
@@ -56,6 +70,28 @@ const Drawer = (props: DrawerProps) => {
   return (
     <Box display="flex" bgcolor="black" height="100vh">
       <CssBaseline />
+      <AppBar
+        position="fixed"
+        sx={{
+          mb: 5,
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+          pl: 3,
+          backgroundColor: 'unset',
+          display: { sm: 'none' },
+        }}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            edge="start"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            sx={{ mr: 2, display: { sm: 'none' }, p: 0 }}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
       <Box
         component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -63,7 +99,7 @@ const Drawer = (props: DrawerProps) => {
         <DrawerComponent
           container={container}
           open={mobileOpen}
-          onClose={handleDrawerToggle}
+          onClose={() => setMobileOpen(!mobileOpen)}
           ModalProps={{
             keepMounted: true,
           }}
@@ -96,6 +132,7 @@ const Drawer = (props: DrawerProps) => {
         sx={{
           flexGrow: 1,
           p: 3,
+          pt: { xs: 8 },
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >

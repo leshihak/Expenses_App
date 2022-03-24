@@ -3,8 +3,8 @@ import { FC } from 'react';
 
 interface UserInfoProps {
   totalBalance: number;
-  userPhotoUrl: string;
-  userName: string;
+  userPhotoUrl: string | null | undefined;
+  userName: string | null | undefined;
 }
 
 const UserInfo: FC<UserInfoProps> = ({
@@ -14,14 +14,16 @@ const UserInfo: FC<UserInfoProps> = ({
 }) => (
   <Box bgcolor="white" borderRadius="5px" display="flex" py={1}>
     <Box display="flex" justifyContent="center" alignItems="center" mx={1}>
-      <Avatar
-        sx={{ width: 56, height: 56 }}
-        src={userPhotoUrl}
-        alt={userName}
-      />
+      {userPhotoUrl && userName && (
+        <Avatar
+          sx={{ width: 56, height: 56 }}
+          src={userPhotoUrl}
+          alt={userName}
+        />
+      )}
     </Box>
     <Box display="flex" flexDirection="column" alignItems="flex-start">
-      <Typography variant="h6">HELLO {userName.toUpperCase()}</Typography>
+      <Typography variant="h6">HELLO {userName?.toUpperCase()}</Typography>
       <Typography variant="body1">
         Your total balance is
         <span style={{ color: '#197d29' }}> {totalBalance} </span>
