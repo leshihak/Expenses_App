@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Drawer from '../ui/Drawer/Drawer';
 import UserInfo from '../UserInfo/UserInfo';
 
 const DUMMY_INFO = {
@@ -9,11 +10,13 @@ const DUMMY_INFO = {
 };
 
 const Dashboard: FC = () => (
-  <UserInfo
-    totalBalance={DUMMY_INFO.totalBalance}
-    userPhotoUrl={DUMMY_INFO.userPhotoUrl}
-    userName={DUMMY_INFO.userName}
-  />
+  <Drawer>
+    <UserInfo
+      totalBalance={DUMMY_INFO.totalBalance}
+      userPhotoUrl={DUMMY_INFO.userPhotoUrl}
+      userName={DUMMY_INFO.userName}
+    />
+  </Drawer>
 );
 
 export default Dashboard;

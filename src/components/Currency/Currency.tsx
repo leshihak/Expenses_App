@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from 'react';
 import { CurrencyItem } from '../../models/currency.model';
 import { getCurrencyData } from '../../services/currency.service';
 import { EUR_CURRENCY_CODE, USD_CURRENCY_CODE } from '../../static/constants';
+import Drawer from '../ui/Drawer/Drawer';
 
 const Currency: FC = () => {
   const [currencyData, setCurrencyData] = useState<CurrencyItem[] | null>(null);
@@ -18,7 +19,7 @@ const Currency: FC = () => {
   }, []);
 
   return (
-    <>
+    <Drawer>
       <Box display="flex" mb={1}>
         <Box bgcolor="ghostwhite" p={1} minWidth="110px" borderRadius="5px">
           CURRENCY
@@ -102,7 +103,7 @@ const Currency: FC = () => {
           );
         })
       )}
-    </>
+    </Drawer>
   );
 };
 
