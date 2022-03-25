@@ -1,14 +1,15 @@
 import { Avatar, Box, Typography } from '@mui/material';
 import { FC } from 'react';
+import { AccountInfo } from '../../models/bank.model';
 
-interface UserInfoProps {
-  totalBalance: number;
+interface TotalBalanceProps {
+  card: AccountInfo | undefined;
   userPhotoUrl: string | null | undefined;
   userName: string | null | undefined;
 }
 
-const UserInfo: FC<UserInfoProps> = ({
-  totalBalance,
+const TotalBalance: FC<TotalBalanceProps> = ({
+  card,
   userPhotoUrl,
   userName,
 }) => (
@@ -25,12 +26,15 @@ const UserInfo: FC<UserInfoProps> = ({
     <Box display="flex" flexDirection="column" alignItems="flex-start">
       <Typography variant="h6">HELLO {userName?.toUpperCase()}</Typography>
       <Typography variant="body1">
-        Your total balance is
-        <span style={{ color: '#197d29' }}> {totalBalance} </span>
-        UAH
+        Your total balance on main {card?.type} card is
+        <span style={{ color: '#197d29', fontWeight: 'bold' }}>
+          {' '}
+          {card?.balance && card?.balance / 100}{' '}
+        </span>
+        {card?.cashbackType}
       </Typography>
     </Box>
   </Box>
 );
 
-export default UserInfo;
+export default TotalBalance;

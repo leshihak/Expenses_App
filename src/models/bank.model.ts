@@ -11,6 +11,7 @@ export interface AccountInfo {
   creditLimit: number;
   type: string;
   currencyCode: string;
-  cashbackType: string;
-  maskedPan: string[];
+  cashbackType?: string;
+  maskedPan?: string[];
+  sendId?: string;
 }
