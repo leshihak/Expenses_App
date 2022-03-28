@@ -9,9 +9,11 @@ import Card from '../Card/Card';
 import Drawer from '../ui/Drawer/Drawer';
 import TotalBalance from '../TotalBalance/TotalBalance';
 import Loader from '../ui/Loader/Loader';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard: FC = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const token = useMonobankToken();
 
   const [clientAccounts, setClientAccounts] = useState<AccountInfo[] | null>(
@@ -28,6 +30,18 @@ const Dashboard: FC = () => {
         .catch((error) => console.log(error));
     }
   }, [token]);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/auth');
+    }
+  }, [user]);
+
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate('/monobank-auth');
+  //   }
+  // }, [token]);
 
   if (!clientAccounts) {
     return <Loader />;
