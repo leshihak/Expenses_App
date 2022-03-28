@@ -5,6 +5,7 @@ import { CurrencyItem } from '../../models/currency.model';
 import { getCurrencyData } from '../../services/currency.service';
 import { EUR_CURRENCY_CODE, USD_CURRENCY_CODE } from '../../static/constants';
 import Drawer from '../ui/Drawer/Drawer';
+import Loader from '../ui/Loader/Loader';
 
 const Currency: FC = () => {
   const [currencyData, setCurrencyData] = useState<CurrencyItem[] | null>(null);
@@ -17,6 +18,10 @@ const Currency: FC = () => {
       })
       .catch((error) => console.log(error));
   }, []);
+
+  if (!currencyData) {
+    return <Loader />;
+  }
 
   return (
     <Drawer>
@@ -43,66 +48,60 @@ const Currency: FC = () => {
           SELL
         </Box>
       </Box>
-      {!currencyData ? (
-        <Box my={1}>
-          <Typography color="white">Loading</Typography>
-        </Box>
-      ) : (
-        currencyData.map((currency) => {
-          const showMainCurrencies = currency.rateSell && currency.rateBuy;
-          const USDtoEUR =
-            currency.currencyCodeA === USD_CURRENCY_CODE &&
-            currency.currencyCodeB === EUR_CURRENCY_CODE;
+      {currencyData.map((currency) => {
+        const showMainCurrencies = currency.rateSell && currency.rateBuy;
+        const USDtoEUR =
+          currency.currencyCodeA === USD_CURRENCY_CODE &&
+          currency.currencyCodeB === EUR_CURRENCY_CODE;
 
-          return (
-            showMainCurrencies && (
+        return (
+          showMainCurrencies && (
+            <Box
+              key={`${currency.currencyCodeA}-${currency.date}-${currency.rateCross}`}
+              display="flex"
+              mb={1}
+            >
               <Box
-                key={`${currency.currencyCodeA}-${currency.date}-${currency.rateCross}`}
-                display="flex"
-                mb={1}
+                bgcolor="ghostwhite"
+                p={1}
+                minWidth="110px"
+                borderRadius="5px"
               >
-                <Box
-                  bgcolor="ghostwhite"
-                  p={1}
-                  minWidth="110px"
-                  borderRadius="5px"
-                >
-                  <Typography>
-                    {USDtoEUR
-                      ? `${
-                          CurrencyCode.number(currency.currencyCodeA.toString())
-                            ?.code
-                        }/${
-                          CurrencyCode.number(currency.currencyCodeB.toString())
-                            ?.code
-                        }`
-                      : CurrencyCode.number(currency.currencyCodeA.toString())
-                          ?.code}
-                  </Typography>
-                </Box>
-                <Box
-                  bgcolor="ghostwhite"
-                  p={1}
-                  ml={1}
-                  minWidth="110px"
-                  borderRadius="5px"
-                >
-                  <Typography>{currency.rateBuy}</Typography>
-                </Box>
-                <Box
-                  bgcolor="ghostwhite"
-                  p={1}
-                  ml={1}
-                  minWidth="110px"
-                  borderRadius="5px"
-                >
-                  <Typography>{currency.rateSell}</Typography>
-                </Box>
+                <Typography>
+                  {USDtoEUR
+                    ? `${
+                        CurrencyCode.number(currency.currencyCodeA.toString())
+                          ?.code
+                      }/${
+                        CurrencyCode.number(currency.currencyCodeB.toString())
+                          ?.code
+                      }`
+                    : CurrencyCode.number(currency.currencyCodeA.toString())
+                        ?.code}
+                </Typography>
               </Box>
-            )
-          );
-        })
-      )}
+              <Box
+                bgcolor="ghostwhite"
+                p={1}
+                ml={1}
+                minWidth="110px"
+                borderRadius="5px"
+              >
+                <Typography>{currency.rateBuy}</Typography>
+              </Box>
+              <Box
+                bgcolor="ghostwhite"
+                p={1}
+                ml={1}
+                minWidth="110px"
+                borderRadius="5px"
+              >
+                <Typography>{currency.rateSell}</Typography>
+              </Box>
+            </Box>
+          )
+        );
+      })}
     </Drawer>
   );
 };
