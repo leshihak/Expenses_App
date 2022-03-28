@@ -25,19 +25,22 @@ const RangeDatePicker: FC<RangeDatePickerProps> = ({
       value={dateRange}
       onChange={(newValue) => onSetDateRange(newValue)}
       renderInput={(startProps, endProps) => (
-        <>
+        <Box display="flex" alignItems="center">
           <TextField
-            sx={{ backgroundColor: 'white' }}
+            sx={{ backgroundColor: 'white', borderRadius: '4px' }}
             variant="filled"
             {...startProps}
           />
-          <Box mx={2}> to </Box>
+          <Box mx={2} color="white">
+            {' '}
+            to{' '}
+          </Box>
           <TextField
-            sx={{ backgroundColor: 'white' }}
+            sx={{ backgroundColor: 'white', borderRadius: '4px' }}
             variant="filled"
             {...endProps}
           />
-        </>
+        </Box>
       )}
     />
   </LocalizationProvider>

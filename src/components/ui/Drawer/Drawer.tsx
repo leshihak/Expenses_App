@@ -84,6 +84,7 @@ const Drawer = (props: DrawerProps) => {
           pl: 3,
           backgroundColor: 'unset',
           display: { sm: 'none' },
+          boxShadow: 'none',
         }}
       >
         <Toolbar>
@@ -139,6 +140,7 @@ const Drawer = (props: DrawerProps) => {
           p: 3,
           pt: { xs: 8 },
           width: { sm: `calc(100% - ${drawerWidth}px)` },
+          overflowY: 'auto',
         }}
       >
         {children}

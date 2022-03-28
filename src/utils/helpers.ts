@@ -6,3 +6,23 @@ export const getMinDate = (date: Date | null, amount: number) =>
 
 export const getMaxDate = (date: Date | null, amount: number) =>
   date ? addDays(date, amount) : undefined;
+
+export const createTableData = (
+  id: string,
+  date: string,
+  name: string,
+  amount: number,
+  currency: string | undefined,
+  commission: number,
+  cashback: number,
+  balance: number
+) => ({
+  id,
+  date,
+  name,
+  amount,
+  currency,
+  commission,
+  cashback,
+  balance,
+});
