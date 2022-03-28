@@ -43,10 +43,12 @@ const Drawer = (props: DrawerProps) => {
   const { window, children } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const handleLogOut = () =>
+  const handleLogOut = () => {
+    localStorage.removeItem('monobankToken');
     signOut(auth)
       .then(() => navigate('/auth'))
       .catch((error) => console.log(error));
+  };
 
   const drawer = (
     <Box>
