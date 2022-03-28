@@ -11,7 +11,7 @@ const Auth: FC = () => {
 
   const handleSignIn = () =>
     signInWithPopup(auth, googleProvider)
-      .then(() => navigate('/'))
+      .then(() => navigate('/monobank-auth'))
       .catch((error) => console.log(error.message));
 
   return (
