@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import { ReactNode, useState } from 'react';
 import { getAuth, signOut } from 'firebase/auth';
@@ -24,6 +25,11 @@ const drawerWidth = 240;
 const drawerList = [
   { icon: <DashboardIcon />, title: 'Dashboard', href: '/' },
   { icon: <CurrencyExchangeIcon />, title: 'Currency', href: '/currency' },
+  {
+    icon: <ListAltIcon />,
+    title: 'Statement List',
+    href: '/statement',
+  },
 ];
 
 interface DrawerProps {

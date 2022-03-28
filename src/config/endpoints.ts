@@ -8,4 +8,5 @@ enum endpointParts {
 export const apiActionUrls = {
   currencyInfo: `${MonobankClient}${endpointParts.Bank}/currency`,
   clientInfo: `${MonobankClient}${endpointParts.Personal}/client-info`,
+  statementList: `${MonobankClient}${endpointParts.Personal}/statement`,
 };
