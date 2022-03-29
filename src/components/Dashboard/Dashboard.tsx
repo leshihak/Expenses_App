@@ -1,4 +1,5 @@
 import { Box, Grid } from '@mui/material';
+import { toast } from 'react-toastify';
 import { FC, useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import useToken from '../../hooks/useToken';
@@ -25,7 +26,7 @@ const Dashboard: FC = () => {
           const { data } = result;
           setClientAccounts(data.accounts);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => toast.error(error));
     }
   }, [token]);
 

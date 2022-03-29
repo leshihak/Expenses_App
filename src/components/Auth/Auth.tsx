@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { Box, Button } from '@mui/material';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { FC } from 'react';
@@ -12,7 +13,7 @@ const Auth: FC = () => {
   const handleSignIn = () =>
     signInWithPopup(auth, googleProvider)
       .then(() => navigate('/monobank-auth'))
-      .catch((error) => console.log(error.message));
+      .catch((error) => toast.error(error.message));
 
   return (
     <Box

@@ -13,6 +13,7 @@ import {
   ListItemText,
   Toolbar,
 } from '@mui/material';
+import { toast } from 'react-toastify';
 import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ListAltIcon from '@mui/icons-material/ListAlt';
@@ -47,7 +48,7 @@ const Drawer = (props: DrawerProps) => {
     localStorage.removeItem('token');
     signOut(auth)
       .then(() => navigate('/auth'))
-      .catch((error) => console.log(error));
+      .catch((error) => toast.error(error));
   };
 
   const drawer = (

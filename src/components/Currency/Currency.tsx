@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+import { toast } from 'react-toastify';
 import CurrencyCode from 'currency-codes';
 import { FC, useEffect, useState } from 'react';
 import { CurrencyItem } from '../../models/currency.model';
@@ -16,7 +17,7 @@ const Currency: FC = () => {
         const { data } = result;
         setCurrencyData(data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => toast.error(error));
   }, []);
 
   if (!currencyData) {

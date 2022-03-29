@@ -1,5 +1,5 @@
 import { Box, Link, Button, Typography } from '@mui/material';
-import { FC, useState } from 'react';
+import { FC, useState, KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StyledTextField } from './MonobankAuth.styled';
 
@@ -8,6 +8,16 @@ const MonobankAuth: FC = () => {
 
   const [tokenValue, setTokenValue] = useState('');
   const [error, setError] = useState<string | null>(null);
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event?.code === 'Enter' && tokenValue.trim().length !== 0) {
+      localStorage.setItem('token', tokenValue);
+      navigate('/');
+      setError('');
+    } else {
+      setError('Please provide not an empty Token');
+    }
+  };
 
   const handleSubmit = () => {
     if (tokenValue.trim().length !== 0) {
@@ -64,6 +74,7 @@ const MonobankAuth: FC = () => {
         value={tokenValue}
         placeholder="Your Token here..."
         onChange={(event) => setTokenValue(event.target.value)}
+        onKeyDown={(event) => handleKeyDown(event)}
       />
       <Box my={3} display="flex" flexDirection="column" alignItems="center">
         <Typography color="white" variant="h5">

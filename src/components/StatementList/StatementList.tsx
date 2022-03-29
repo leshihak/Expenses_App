@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import useToken from '../../hooks/useToken';
 import { getStatementList } from '../../services/statementList.service';
 import Drawer from '../ui/Drawer/Drawer';
@@ -19,13 +20,13 @@ const StatementList: FC = () => {
   );
 
   useEffect(() => {
-    if (token && dateRange.every((date) => date !== null)) {
-      getStatementList(token, getTime(dateRange[0]!!), getTime(dateRange[1]!!))
+    if (token && dateRange[0] !== null && dateRange[1] !== null) {
+      getStatementList(token, getTime(dateRange[0]), getTime(dateRange[1]))
         .then((result) => {
           const { data } = result;
           setStatementList(data);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => toast.error(error));
     }
   }, [dateRange, token]);
 

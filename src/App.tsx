@@ -10,6 +10,8 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import StatementList from './components/StatementList/StatementList';
 import { app } from './config/firebase';
 import { AuthProvider } from './hooks/useAuth';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 getApps().length === 0 ? app : getApp();
 
@@ -28,6 +30,7 @@ const App = () => (
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
+    <ToastContainer />
   </AuthProvider>
 );
 
