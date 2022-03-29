@@ -31,18 +31,6 @@ const Dashboard: FC = () => {
     }
   }, [token]);
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/auth');
-    }
-  }, [user]);
-
-  // useEffect(() => {
-  //   if (!token) {
-  //     navigate('/monobank-auth');
-  //   }
-  // }, [token]);
-
   if (!clientAccounts) {
     return <Loader />;
   }
