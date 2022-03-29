@@ -1,21 +1,21 @@
 import { createContext, useContext } from 'react';
 import Loader from '../components/ui/Loader/Loader';
-import { AuthUser, AuthUserProviderProps } from '../models/auth.model';
+import { Auth, AuthProviderProps } from '../models/auth.model';
 import useFirebaseAuth from './useFirebaseAuth';
 
-const AuthUserContext = createContext<AuthUser>({
+const AuthContext = createContext<Auth>({
   user: null,
   loading: true,
 });
 
-export const AuthUserProvider = ({ children }: AuthUserProviderProps) => {
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const auth = useFirebaseAuth();
+
   if (auth.loading) {
     return <Loader />;
   }
-  return (
-    <AuthUserContext.Provider value={auth}>{children}</AuthUserContext.Provider>
-  );
+
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };
 
-export const useAuth = () => useContext(AuthUserContext);
+export const useAuth = () => useContext(AuthContext);

@@ -44,7 +44,7 @@ const Drawer = (props: DrawerProps) => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleLogOut = () => {
-    localStorage.removeItem('monobankToken');
+    localStorage.removeItem('token');
     signOut(auth)
       .then(() => navigate('/auth'))
       .catch((error) => console.log(error));

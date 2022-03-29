@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface AuthUserProviderProps {
+export interface AuthProviderProps {
   children: ReactNode;
 }
 
@@ -11,7 +11,7 @@ export interface User {
   photoURL: string | null;
 }
 
-export interface AuthUser {
+export interface Auth {
   user: User | null;
   loading: boolean;
 }

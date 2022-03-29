@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import useMonobankToken from '../../hooks/useMonobankAuth';
+import useToken from '../../hooks/useToken';
 import { getStatementList } from '../../services/statementList.service';
 import Drawer from '../ui/Drawer/Drawer';
 import { DateRange } from '@mui/lab/DateRangePicker';
@@ -11,7 +11,7 @@ import { StatementItem } from '../../models/statementList.model';
 import Loader from '../ui/Loader/Loader';
 
 const StatementList: FC = () => {
-  const token = useMonobankToken();
+  const token = useToken();
 
   const [dateRange, setDateRange] = useState<DateRange<Date>>([null, null]);
   const [statementList, setStatementList] = useState<StatementItem[] | null>(

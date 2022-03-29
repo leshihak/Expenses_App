@@ -11,7 +11,7 @@ const MonobankAuth: FC = () => {
 
   const handleSubmit = () => {
     if (tokenValue.trim().length !== 0) {
-      localStorage.setItem('monobankToken', tokenValue);
+      localStorage.setItem('token', tokenValue);
       navigate('/');
       setError('');
     } else {
@@ -57,6 +57,7 @@ const MonobankAuth: FC = () => {
         </Typography>
       </Box>
       <StyledTextField
+        autoComplete="off"
         error={Boolean(error)}
         helperText={error}
         variant="outlined"

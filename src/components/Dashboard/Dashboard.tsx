@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
-import useMonobankToken from '../../hooks/useMonobankAuth';
+import useToken from '../../hooks/useToken';
 import CurrencyCode from 'currency-codes';
 import { AccountInfo } from '../../models/bank.model';
 import { getBankData } from '../../services/bank.service';
@@ -9,12 +9,10 @@ import Card from '../Card/Card';
 import Drawer from '../ui/Drawer/Drawer';
 import TotalBalance from '../TotalBalance/TotalBalance';
 import Loader from '../ui/Loader/Loader';
-import { useNavigate } from 'react-router-dom';
 
 const Dashboard: FC = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
-  const token = useMonobankToken();
+  const token = useToken();
 
   const [clientAccounts, setClientAccounts] = useState<AccountInfo[] | null>(
     null
