@@ -9,25 +9,19 @@ const MonobankAuth: FC = () => {
   const [tokenValue, setTokenValue] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event?.code === 'Enter') {
-      if (tokenValue.trim().length !== 0) {
-        localStorage.setItem('token', tokenValue);
-        navigate('/');
-        setError('');
-      } else {
-        setError('Please provide not an empty Token');
-      }
-    }
-  };
-
-  const handleSubmit = () => {
+  const setTokenToLocalStorage = () => {
     if (tokenValue.trim().length !== 0) {
       localStorage.setItem('token', tokenValue);
       navigate('/');
       setError('');
     } else {
       setError('Please provide not an empty Token');
+    }
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event?.code === 'Enter') {
+      setTokenToLocalStorage();
     }
   };
 
@@ -69,7 +63,7 @@ const MonobankAuth: FC = () => {
         </Typography>
       </Box>
       <StyledTextField
-        // autoComplete="off"
+        autoComplete="off"
         error={Boolean(error)}
         helperText={error}
         variant="outlined"
@@ -84,7 +78,11 @@ const MonobankAuth: FC = () => {
         </Typography>
         <Typography color="white">Click on Submit button below</Typography>
       </Box>
-      <Button size="large" variant="outlined" onClick={handleSubmit}>
+      <Button
+        size="large"
+        variant="outlined"
+        onClick={() => setTokenToLocalStorage()}
+      >
         SUBMIT
       </Button>
     </Box>
