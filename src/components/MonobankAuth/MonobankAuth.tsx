@@ -10,12 +10,14 @@ const MonobankAuth: FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event?.code === 'Enter' && tokenValue.trim().length !== 0) {
-      localStorage.setItem('token', tokenValue);
-      navigate('/');
-      setError('');
-    } else {
-      setError('Please provide not an empty Token');
+    if (event?.code === 'Enter') {
+      if (tokenValue.trim().length !== 0) {
+        localStorage.setItem('token', tokenValue);
+        navigate('/');
+        setError('');
+      } else {
+        setError('Please provide not an empty Token');
+      }
     }
   };
 
@@ -67,7 +69,7 @@ const MonobankAuth: FC = () => {
         </Typography>
       </Box>
       <StyledTextField
-        autoComplete="off"
+        // autoComplete="off"
         error={Boolean(error)}
         helperText={error}
         variant="outlined"

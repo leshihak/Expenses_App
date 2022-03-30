@@ -3,12 +3,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { StrictMode } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './hooks/useAuth';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.render(
-	<StrictMode>
-		<App />
-	</StrictMode>,
-	document.getElementById('root')
+  <StrictMode>
+    <AuthProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+      <ToastContainer />
+    </AuthProvider>
+  </StrictMode>,
+  document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

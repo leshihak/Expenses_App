@@ -2,7 +2,6 @@ import { Box, Grid } from '@mui/material';
 import { toast } from 'react-toastify';
 import { FC, useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
-import useToken from '../../hooks/useToken';
 import CurrencyCode from 'currency-codes';
 import { AccountInfo } from '../../models/bank.model';
 import { getBankData } from '../../services/bank.service';
@@ -13,7 +12,7 @@ import Loader from '../ui/Loader/Loader';
 
 const Dashboard: FC = () => {
   const { user } = useAuth();
-  const token = useToken();
+  const token = localStorage.getItem('token');
 
   const [clientAccounts, setClientAccounts] = useState<AccountInfo[] | null>(
     null
