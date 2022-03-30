@@ -20,10 +20,6 @@ const App = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    if (token && user) {
-      navigate('/');
-    }
-
     if (!token && !user) {
       navigate('/auth');
     }
@@ -35,10 +31,9 @@ const App = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />}>
-        <Route path="currency" element={<Currency />} />
-        <Route path="statement" element={<StatementList />} />
-      </Route>
+      <Route index element={<Dashboard />} />
+      <Route path="/currency" element={<Currency />} />
+      <Route path="/statement" element={<StatementList />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/monobank-auth" element={<MonobankAuth />} />
       <Route path="/about" element={<About />} />
