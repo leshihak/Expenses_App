@@ -22,7 +22,10 @@ const Card: FC<CardProps> = ({ data }) => (
     }
   >
     <Box display="flex" height="30px">
-      <Typography color="white" fontWeight="bold">
+      <Typography
+        color={data.type === 'white' ? 'black' : 'white'}
+        fontWeight="bold"
+      >
         monobank
       </Typography>
       <Box ml={1}>
@@ -32,12 +35,15 @@ const Card: FC<CardProps> = ({ data }) => (
       </Box>
     </Box>
     <Box height="30px">
-      <Typography color="white" fontWeight="bold">
+      <Typography
+        color={data.type === 'white' ? 'black' : 'white'}
+        fontWeight="bold"
+      >
         {data.balance / 100}{' '}
         {CurrencyCode.number(data.currencyCode.toString())?.code}
       </Typography>
     </Box>
-    <Box color="white" height="30px">
+    <Box color={data.type === 'white' ? 'black' : 'white'} height="30px">
       {data.maskedPan?.[0]}
     </Box>
     <Box width={1} display="flex" justifyContent="end">
