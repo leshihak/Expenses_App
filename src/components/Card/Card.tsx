@@ -8,50 +8,55 @@ interface CardProps {
   data: AccountInfo;
 }
 
-const Card: FC<CardProps> = ({ data }) => (
-  <Box
-    display="flex"
-    flexDirection="column"
-    justifyContent="space-between"
-    border="1px solid gray"
-    p={2.5}
-    sx={{ borderRadius: '10px' }}
-    height="185px"
-    bgcolor={
-      data.type === 'black' ? 'black' : data.type === 'white' ? 'white' : 'gray'
-    }
-  >
-    <Box display="flex" height="30px">
-      <Typography
-        color={data.type === 'white' ? 'black' : 'white'}
-        fontWeight="bold"
-      >
-        monobank
-      </Typography>
-      <Box ml={1}>
-        <Typography variant="caption" color="#4c4c4c">
-          | Universal Bank
+const Card: FC<CardProps> = ({ data }) => {
+  const textColor = data.type === 'black' ? 'white' : 'black';
+
+  return (
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+      border="1px solid gray"
+      p={2.5}
+      sx={{ borderRadius: '10px' }}
+      height="185px"
+      bgcolor={
+        data.type === 'black'
+          ? 'black'
+          : data.type === 'white'
+          ? 'white'
+          : 'gray'
+      }
+    >
+      <Box display="flex" height="30px">
+        <Typography color={textColor} fontWeight="bold">
+          monobank
+        </Typography>
+        <Box ml={1}>
+          <Typography
+            variant="caption"
+            color={data.type === 'black' ? '#9b9b9b' : '#161616'}
+          >
+            | Universal Bank
+          </Typography>
+        </Box>
+      </Box>
+      <Box height="30px">
+        <Typography color={textColor} fontWeight="bold">
+          {data.balance / 100}{' '}
+          {CurrencyCode.number(data.currencyCode.toString())?.code}
         </Typography>
       </Box>
-    </Box>
-    <Box height="30px">
-      <Typography
-        color={data.type === 'white' ? 'black' : 'white'}
-        fontWeight="bold"
-      >
-        {data.balance / 100}{' '}
-        {CurrencyCode.number(data.currencyCode.toString())?.code}
-      </Typography>
-    </Box>
-    <Box color={data.type === 'white' ? 'black' : 'white'} height="30px">
-      {data.maskedPan?.[0]}
-    </Box>
-    <Box width={1} display="flex" justifyContent="end">
-      <Box width="56px">
-        <MastercardLogo />
+      <Box color={textColor} height="30px">
+        {data.maskedPan?.[0]}
+      </Box>
+      <Box width={1} display="flex" justifyContent="end">
+        <Box width="56px">
+          <MastercardLogo />
+        </Box>
       </Box>
     </Box>
-  </Box>
-);
+  );
+};
 
 export default Card;

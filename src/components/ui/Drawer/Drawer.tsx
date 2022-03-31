@@ -57,9 +57,20 @@ const Drawer = (props: DrawerProps) => {
       <Divider />
       <List sx={{ pt: 2 }}>
         {drawerList.map((item) => (
-          <ListItem button key={item.title} component={Link} href={item.href}>
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.title} />
+          <ListItem key={item.title}>
+            <Link
+              href={item.href}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                textDecoration: 'none',
+                color: 'black',
+                textTransform: 'none',
+              }}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.title} />
+            </Link>
           </ListItem>
         ))}
       </List>
