@@ -33,11 +33,12 @@ const MonobankAuth: FC = () => {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
+      p={1}
     >
       <Typography color="white" variant="h5">
         Step 1
       </Typography>
-      <Typography color="white">
+      <Typography color="white" align="center">
         Go to the{' '}
         <Link href="https://api.monobank.ua/" target="_blank">
           Monobank Page
@@ -63,6 +64,8 @@ const MonobankAuth: FC = () => {
         </Typography>
       </Box>
       <StyledTextField
+        fullWidth
+        sx={{ maxWidth: 360 }}
         autoComplete="off"
         error={Boolean(error)}
         helperText={error}
@@ -80,6 +83,8 @@ const MonobankAuth: FC = () => {
       </Box>
       <Button
         size="large"
+        fullWidth
+        sx={{ maxWidth: 360 }}
         variant="outlined"
         onClick={() => setTokenToLocalStorage()}
       >

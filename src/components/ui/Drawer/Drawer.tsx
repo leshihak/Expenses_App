@@ -96,7 +96,7 @@ const Drawer = (props: DrawerProps) => {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
           pl: 3,
-          backgroundColor: 'unset',
+          backgroundColor: 'black',
           display: { sm: 'none' },
           boxShadow: 'none',
         }}

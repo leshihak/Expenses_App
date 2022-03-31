@@ -27,14 +27,11 @@ const About: FC = () => {
           sx={{ cursor: 'pointer' }}
         >
           <ArrowCircleLeftIcon width="40px" sx={{ mr: 1 }} />
-          <Typography variant="body1" color="black" fontWeight={600}>
-            Back to Auth page
-          </Typography>
         </Box>
         <Typography variant="h5" color="black" fontWeight={600}>
           ABOUT
         </Typography>
-        <Box width="175px" />
+        <Box width="32px" />
       </Box>
       <Box>
         <Typography
