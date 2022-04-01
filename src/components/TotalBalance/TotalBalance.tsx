@@ -29,7 +29,7 @@ const TotalBalance: FC<TotalBalanceProps> = ({
         Your total balance on main {card?.type} card is
         <span style={{ color: '#197d29', fontWeight: 'bold' }}>
           {' '}
-          {card?.balance && card?.balance / 100}{' '}
+          {(card?.balance && card?.balance / 100)?.toFixed(2)}{' '}
         </span>
         {card?.cashbackType}
       </Typography>
