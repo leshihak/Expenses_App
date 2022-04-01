@@ -9,6 +9,19 @@ import Table from '../ui/Table/Table';
 import { Box } from '@mui/material';
 import { StatementItem } from '../../models/statementList.model';
 import Loader from '../ui/Loader/Loader';
+import { createStatementListTableData } from '../../utils/helpers';
+import CurrencyCode from 'currency-codes';
+import format from 'date-fns/format';
+
+const HEADERS = [
+  { title: 'DATE AND TIME', key: 'date' },
+  { title: 'NAME OF OPERATION', key: 'name' },
+  { title: 'OPERATION AMOUNT', key: 'amount' },
+  { title: 'CURRENCY', key: 'currency' },
+  { title: 'CASHBACK, UAH', key: 'cashback' },
+  { title: 'COMMISSION RATE, UAH', key: 'commission' },
+  { title: 'BALANCE', key: 'balance' },
+];
 
 const StatementList: FC = () => {
   const token = localStorage.getItem('token');
@@ -33,12 +46,25 @@ const StatementList: FC = () => {
     return <Loader />;
   }
 
+  const rows =
+    statementList?.map((item) =>
+      createStatementListTableData(
+        format(new Date(item.time * 1000), 'MM.dd.yyyy hh:mm:ss'),
+        item.description,
+        item.amount / 100,
+        CurrencyCode.number(item.currencyCode.toString())?.code,
+        item.commissionRate,
+        item.cashbackAmount / 100,
+        item.balance / 100
+      )
+    ) ?? [];
+
   return (
     <Drawer>
       <Box mb={3}>
         <RangeDatePicker dateRange={dateRange} onSetDateRange={setDateRange} />
       </Box>
-      {statementList && <Table data={statementList} />}
+      {statementList && <Table rows={rows} headers={HEADERS} withPagination />}
     </Drawer>
   );
 };

@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import CurrencyCode from 'currency-codes';
 import { AccountInfo } from '../../models/bank.model';
-import { getBankData } from '../../services/bank.service';
+import { getMonobankData } from '../../services/monobank.service';
 import Card from '../Card/Card';
 import Drawer from '../ui/Drawer/Drawer';
 import TotalBalance from '../TotalBalance/TotalBalance';
@@ -20,7 +20,7 @@ const Dashboard: FC = () => {
 
   useEffect(() => {
     if (token) {
-      getBankData(token)
+      getMonobankData(token)
         .then((result) => {
           const { data } = result;
           setClientAccounts(data.accounts);

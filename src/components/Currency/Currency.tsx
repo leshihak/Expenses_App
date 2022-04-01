@@ -1,111 +1,80 @@
-import { Box, Grid, Typography } from '@mui/material';
 import { toast } from 'react-toastify';
-import CurrencyCode from 'currency-codes';
 import { FC, useEffect, useState } from 'react';
-import { CurrencyItem } from '../../models/currency.model';
-import { getCurrencyData } from '../../services/currency.service';
-import { EUR_CURRENCY_CODE, USD_CURRENCY_CODE } from '../../static/constants';
+import {
+  MonobankCurrencyItem,
+  PrivateBankCurrencyItem,
+} from '../../models/currency.model';
+import {
+  getMonobankCurrencyData,
+  getPrivateBankCurrencyData,
+} from '../../services/currency.service';
 import Drawer from '../ui/Drawer/Drawer';
 import Loader from '../ui/Loader/Loader';
-
-const HEADERS = ['CURRENCY', 'BUY', 'SELL'];
+import Table from '../ui/Table/Table';
+import { Grid, Typography } from '@mui/material';
+import useCurrency from './useCurrency';
 
 const Currency: FC = () => {
-  const [currencyData, setCurrencyData] = useState<CurrencyItem[] | null>(null);
+  const [monobankCurrencyData, setMonobankCurrencyData] = useState<
+    MonobankCurrencyItem[] | null
+  >(null);
+  const [privateBankCurrencyData, setPrivateBankCurrencyData] = useState<
+    PrivateBankCurrencyItem[] | null
+  >(null);
+
+  const {
+    monobankRows,
+    privateBankRows,
+    CURRENCY_SORTING_ARR,
+    CURRENCY_HEADERS,
+  } = useCurrency(monobankCurrencyData, privateBankCurrencyData);
 
   useEffect(() => {
-    getCurrencyData()
+    getMonobankCurrencyData()
       .then((result) => {
         const { data } = result;
-        setCurrencyData(data);
+        setMonobankCurrencyData(data);
       })
       .catch((error) => toast.error(error));
   }, []);
 
-  if (!currencyData) {
+  useEffect(() => {
+    getPrivateBankCurrencyData()
+      .then((result) => {
+        const filteredData: PrivateBankCurrencyItem[] = result.data.filter(
+          (item: PrivateBankCurrencyItem) => item.ccy !== 'RUR'
+        );
+        setPrivateBankCurrencyData(
+          filteredData.sort(
+            (a, b) =>
+              CURRENCY_SORTING_ARR.indexOf(a.ccy) -
+              CURRENCY_SORTING_ARR.indexOf(b.ccy)
+          )
+        );
+      })
+      .catch((error) => toast.error(error));
+  }, []);
+
+  if (!monobankCurrencyData || !privateBankCurrencyData) {
     return <Loader />;
   }
 
   return (
     <Drawer>
-      <Grid container spacing={2}>
-        {HEADERS.map((header) => (
-          <Grid item key={header} xs={4} sm={4} md={2}>
-            <Box
-              bgcolor="ghostwhite"
-              borderRadius="5px"
-              my={1}
-              mr={1}
-              p={1}
-              sx={{ overflowWrap: 'break-word' }}
-            >
-              {header}
-            </Box>
-          </Grid>
-        ))}
+      <Grid container spacing={3}>
+        <Grid item xs={12} lg={6}>
+          <Typography color="white" variant="h4">
+            Monobank Exchange
+          </Typography>
+          <Table rows={monobankRows} headers={CURRENCY_HEADERS} />
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <Typography color="white" variant="h4">
+            PrivateBank Exchange
+          </Typography>
+          <Table rows={privateBankRows} headers={CURRENCY_HEADERS} />
+        </Grid>
       </Grid>
-      {currencyData.map((currency) => {
-        const showMainCurrencies = currency.rateSell && currency.rateBuy;
-        const USDtoEUR =
-          currency.currencyCodeA === USD_CURRENCY_CODE &&
-          currency.currencyCodeB === EUR_CURRENCY_CODE;
-
-        return (
-          showMainCurrencies && (
-            <Grid
-              container
-              key={`${currency.currencyCodeA}-${currency.date}-${currency.rateCross}`}
-              spacing={2}
-            >
-              <Grid item xs={4} sm={4} md={2}>
-                <Box
-                  bgcolor="ghostwhite"
-                  borderRadius="5px"
-                  my={1}
-                  mr={1}
-                  p={1}
-                  sx={{ overflowWrap: 'break-word' }}
-                >
-                  <Typography>
-                    {USDtoEUR
-                      ? `${
-                          CurrencyCode.number(currency.currencyCodeA.toString())
-                            ?.code
-                        }/${
-                          CurrencyCode.number(currency.currencyCodeB.toString())
-                            ?.code
-                        }`
-                      : CurrencyCode.number(currency.currencyCodeA.toString())
-                          ?.code}
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={4} sm={4} md={2}>
-                <Box
-                  bgcolor="ghostwhite"
-                  borderRadius="5px"
-                  my={1}
-                  mr={1}
-                  p={1}
-                >
-                  <Typography>{currency.rateBuy}</Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={4} sm={4} md={2}>
-                <Box
-                  bgcolor="ghostwhite"
-                  borderRadius="5px"
-                  my={1}
-                  mr={1}
-                  p={1}
-                >
-                  <Typography>{currency.rateSell}</Typography>
-                </Box>
-              </Grid>
-            </Grid>
-          )
-        );
-      })}
     </Drawer>
   );
 };

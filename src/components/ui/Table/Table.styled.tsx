@@ -1,6 +1,12 @@
 import { TableCell } from '@mui/material';
 import styled from 'styled-components';
 
-export const TableHeaderCell = styled(TableCell)`
-  font-weight: 600;
+export const StyledTableCell = styled(TableCell)`
+  &:first-child {
+    text-align: left;
+  }
+
+  &:last-child {
+    text-align: right;
+  }
 `;

@@ -7,8 +7,7 @@ export const getMinDate = (date: Date | null, amount: number) =>
 export const getMaxDate = (date: Date | null, amount: number) =>
   date ? addDays(date, amount) : undefined;
 
-export const createTableData = (
-  id: string,
+export const createStatementListTableData = (
   date: string,
   name: string,
   amount: number,
@@ -17,7 +16,6 @@ export const createTableData = (
   cashback: number,
   balance: number
 ) => ({
-  id,
   date,
   name,
   amount,
@@ -26,3 +24,6 @@ export const createTableData = (
   cashback,
   balance,
 });
+
+export const roundNumberWithFixedDecimal = (number: number) =>
+  (Math.round(number * 100) / 100).toFixed(2);
