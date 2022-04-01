@@ -32,6 +32,7 @@ const TotalBalance: FC<TotalBalanceProps> = ({
           {card?.balance && card?.balance / 100}{' '}
         </span>
         {card?.cashbackType}
+        \\\\\\\\\\\
       </Typography>
     </Box>
   </Box>
